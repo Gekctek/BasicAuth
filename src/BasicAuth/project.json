@@ -1,0 +1,30 @@
+﻿{
+	"version": "1.0.0-beta6-1",
+	"description": "BasicAuth Middleware for DNX",
+	"summary": "",
+	"authors": [ "Gekctek" ],
+	"tags": [ "BasicAuth Authentication AspNet DNX" ],
+	"projectUrl": "https://github.com/Gekctek/BasicAuth",
+	"licenseUrl": "https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE",
+	"releaseNotes": "",
+	"repository": { "type": "git" },
+
+	"dependencies": {
+		"Microsoft.AspNet.Http.Abstractions": "1.0.0-beta6",
+		"Microsoft.AspNet.Authentication": "1.0.0-beta6"
+	},
+
+	"frameworks": {
+		"dnx451": { },
+		"dnxcore50": {
+			"dependencies": {
+				"System.Collections": "4.0.10",
+				"System.Runtime": "4.0.20",
+				"System.Runtime.Serialization.Primitives": "4.0.10-beta-*",
+				"System.Threading": "4.0.10",
+				"Microsoft.CSharp": "4.0.0",
+				"System.IO.Compression": "4.0.0"
+			}
+		}
+	}
+}
