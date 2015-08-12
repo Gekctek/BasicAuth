@@ -39,9 +39,7 @@ namespace Microsoft.AspNet.Builder
 			return app.UseMiddleware<BasicAuthMiddleware>(configureOptions);
 		}
 
-		public static IApplicationBuilder UseBasicAuth(
-			this IApplicationBuilder app,
-			Action<BasicAuthOptions> options)
+		public static IApplicationBuilder UseBasicAuth(this IApplicationBuilder app, Action<BasicAuthOptions> options)
 		{
 			if (options == null)
 			{

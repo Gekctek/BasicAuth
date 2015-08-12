@@ -1,7 +1,7 @@
 ﻿{
 	"version": "1.0.0-beta6-1",
 	"description": "BasicAuth Middleware for DNX",
-	"summary": "",
+	"summary": "BasicAuth Middleware for DNX",
 	"authors": [ "Gekctek" ],
 	"tags": [ "BasicAuth Authentication AspNet DNX" ],
 	"projectUrl": "https://github.com/Gekctek/BasicAuth",

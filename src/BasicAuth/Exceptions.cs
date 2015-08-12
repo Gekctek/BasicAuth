@@ -4,7 +4,6 @@ namespace edjCase.BasicAuth
 {
 	public class BasicAuthException : Exception
 	{
-
 		public BasicAuthException(string message) : base(message)
 		{
 		}

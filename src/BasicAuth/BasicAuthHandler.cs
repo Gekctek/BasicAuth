@@ -9,9 +9,8 @@ using Microsoft.AspNet.Http.Features.Authentication;
 
 namespace edjCase.BasicAuth
 {
-	public class BasicAuthHandler : AuthenticationHandler<BasicAuthOptions>
+	internal class BasicAuthHandler : AuthenticationHandler<BasicAuthOptions>
 	{
-
 		protected async override Task<AuthenticationTicket> HandleAuthenticateAsync()
 		{
 			string[] authHeaderValues;
@@ -67,16 +66,6 @@ namespace edjCase.BasicAuth
 			this.Response.Headers.AppendValues("WWW-Authenticate", $"Basic realm=\"{this.Options.Realm}\"");
 			this.Response.StatusCode = 401; //Unauthorized
 			return Task.FromResult(true);
-		}
-
-		public override Task<bool> InvokeAsync()
-		{
-			return base.InvokeAsync();
-		}
-
-		protected override Task FinishResponseAsync()
-		{
-			return base.FinishResponseAsync();
 		}
 	}
 }

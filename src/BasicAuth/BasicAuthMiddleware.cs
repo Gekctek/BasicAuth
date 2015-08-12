@@ -10,7 +10,7 @@ using Microsoft.Framework.WebEncoders;
 
 namespace edjCase.BasicAuth
 {
-	public class BasicAuthMiddleware : AuthenticationMiddleware<BasicAuthOptions>
+	internal class BasicAuthMiddleware : AuthenticationMiddleware<BasicAuthOptions>
 	{
 		public BasicAuthMiddleware(
 			RequestDelegate next, 

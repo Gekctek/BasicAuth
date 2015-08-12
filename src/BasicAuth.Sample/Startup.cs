@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Authentication;
 using Microsoft.AspNet.Builder;
@@ -30,7 +31,7 @@ namespace edjCase.BasicAuth.Sample
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			app
-				.UseBasicAuth("Test", this.AuthenticateCredential, automaticAuthentication: false)
+				.UseBasicAuth("Test", this.AuthenticateCredential, automaticAuthentication: true)
 				.UseMvc();
 		}
 
@@ -39,7 +40,10 @@ namespace edjCase.BasicAuth.Sample
 			AuthenticationTicket ticket = null;
 			if (authInfo.Credential.Username == "Test" && authInfo.Credential.Password == "Password")
 			{
-				ClaimsPrincipal principal = new ClaimsPrincipal();
+				ClaimsIdentity identity = new ClaimsIdentity(authInfo.Options.AuthenticationScheme);
+				identity.AddClaim(new Claim(ClaimTypes.Name, "Test"));
+				identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "TestId"));
+				ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 				ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.Options.AuthenticationScheme);
 			}
 			return Task.FromResult(ticket);
