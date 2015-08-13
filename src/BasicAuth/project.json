@@ -1,0 +1,28 @@
+﻿{
+	"version": "1.0.0-beta6-2",
+	"description": "BasicAuth Middleware for DNX",
+	"summary": "BasicAuth Middleware for DNX",
+	"authors": [ "Gekctek" ],
+	"tags": [ "BasicAuth Authentication AspNet DNX" ],
+	"projectUrl": "https://github.com/Gekctek/BasicAuth",
+	"licenseUrl": "https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE",
+	"repository": { "type": "git" },
+	"releaseNotes": "Fixed possible null ref with exception occurring. Renamed OnAuthFailed to OnException. Removing unused references.",
+
+	"dependencies": {
+		"Microsoft.AspNet.Http.Abstractions": "1.0.0-beta6",
+		"Microsoft.AspNet.Authentication": "1.0.0-beta6"
+	},
+
+	"frameworks": {
+		"dnx451": { },
+		"dnxcore50": {
+			"dependencies": {
+				"System.Collections": "4.0.10",
+				"System.Runtime": "4.0.20",
+				"System.Threading": "4.0.10",
+				"Microsoft.CSharp": "4.0.0"
+			}
+		}
+	}
+}
