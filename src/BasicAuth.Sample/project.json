@@ -6,7 +6,7 @@
 		"Microsoft.AspNet.Mvc": "6.0.0-beta6",
 		"Microsoft.AspNet.Server.IIS": "1.0.0-beta6",
 		"Microsoft.AspNet.Server.WebListener": "1.0.0-beta6",
-		"BasicAuth": "1.0.0-beta6-1"
+		"BasicAuth": "1.0.0-beta6-*"
 	},
 
 	"commands": {

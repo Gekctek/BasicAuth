@@ -1,5 +1,5 @@
 ﻿{
-	"version": "1.0.0-beta6-2",
+	"version": "1.0.0-beta6-3",
 	"description": "BasicAuth Middleware for DNX",
 	"summary": "BasicAuth Middleware for DNX",
 	"authors": [ "Gekctek" ],
@@ -7,11 +7,12 @@
 	"projectUrl": "https://github.com/Gekctek/BasicAuth",
 	"licenseUrl": "https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE",
 	"repository": { "type": "git" },
-	"releaseNotes": "Fixed possible null ref with exception occurring. Renamed OnAuthFailed to OnException. Removing unused references.",
+	"releaseNotes": "Added logging with ILoggerFactory/ILogger. Added IBasicAuthParser interface for DI functionality. Now require calling AddBasicAuth in ConfigureServices method on Startup. ",
 
 	"dependencies": {
 		"Microsoft.AspNet.Http.Abstractions": "1.0.0-beta6",
-		"Microsoft.AspNet.Authentication": "1.0.0-beta6"
+		"Microsoft.AspNet.Authentication": "1.0.0-beta6",
+		"Microsoft.Framework.Logging.Debug": "1.0.0-beta6"
 	},
 
 	"frameworks": {
@@ -20,6 +21,7 @@
 			"dependencies": {
 				"System.Collections": "4.0.10",
 				"System.Runtime": "4.0.20",
+				"System.Runtime.Serialization.Primitives": "4.0.10",
 				"System.Threading": "4.0.10",
 				"Microsoft.CSharp": "4.0.0"
 			}
