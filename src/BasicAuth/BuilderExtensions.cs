@@ -17,7 +17,7 @@ namespace Microsoft.AspNet.Builder
 	public static class BuilderExtensions
 	{
 		/// <summary>
-		/// 
+		/// Extension method to add the Basic auth middleware services to the IoC container
 		/// </summary>
 		/// <param name="services">IoC serivce container to register Basic auth types</param>
 		/// <returns>IoC service container</returns>
