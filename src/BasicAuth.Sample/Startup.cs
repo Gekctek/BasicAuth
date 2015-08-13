@@ -12,6 +12,7 @@ using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Routing;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.Logging;
 
 namespace edjCase.BasicAuth.Sample
 {
@@ -25,12 +26,15 @@ namespace edjCase.BasicAuth.Sample
 		// Use this method to add services to the container
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddBasicAuth();
 			services.AddMvc();
 		}
 
 		// Configure is called after ConfigureServices is called.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
+			loggerFactory.MinimumLevel = LogLevel.Debug;
+			loggerFactory.AddDebug(LogLevel.Debug);
 			string realm = "Test"; //Replace with your Basic Auth realm
 			app.UseBasicAuth(realm, this.AuthenticateCredential, null, true)
 				.UseMvc();

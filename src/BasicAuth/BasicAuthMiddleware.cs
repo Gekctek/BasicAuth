@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNet.Authentication;
+﻿using edjCase.BasicAuth.Abstractions;
+using Microsoft.AspNet.Authentication;
 using Microsoft.AspNet.Builder;
+using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
 using Microsoft.Framework.WebEncoders;
@@ -11,14 +13,17 @@ namespace edjCase.BasicAuth
 	/// </summary>
 	internal class BasicAuthMiddleware : AuthenticationMiddleware<BasicAuthOptions>
 	{
+		private IBasicAuthParser parser { get; }
 		public BasicAuthMiddleware(
 			RequestDelegate next, 
 			IOptions<BasicAuthOptions> options, 
 			ILoggerFactory loggerFactory, 
 			IUrlEncoder encoder, 
-			ConfigureOptions<BasicAuthOptions> configureOptions) 
+			ConfigureOptions<BasicAuthOptions> configureOptions,
+			IBasicAuthParser parser) 
 			: base(next, options, loggerFactory, encoder, configureOptions)
 		{
+			this.parser = parser;
 		}
 
 		/// <summary>
@@ -27,7 +32,7 @@ namespace edjCase.BasicAuth
 		/// <returns>Basic auth request authentication handler</returns>
 		protected override AuthenticationHandler<BasicAuthOptions> CreateHandler()
 		{
-			return new BasicAuthHandler();
+			return new BasicAuthHandler(this.parser);
 		}
 	}
 

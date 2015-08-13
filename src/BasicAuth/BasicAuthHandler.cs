@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using edjCase.BasicAuth.Abstractions;
 using Microsoft.AspNet.Authentication;
 using Microsoft.AspNet.Authentication.Notifications;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Http.Features.Authentication;
 using Microsoft.Framework.Logging;
@@ -15,6 +17,14 @@ namespace edjCase.BasicAuth
 	internal class BasicAuthHandler : AuthenticationHandler<BasicAuthOptions>
 	{
 		/// <summary>
+		/// Parses a http request into a Basic auth credential
+		/// </summary>
+		private IBasicAuthParser parser { get; }
+		public BasicAuthHandler(IBasicAuthParser parser)
+		{
+			this.parser = parser;
+		}
+		/// <summary>
 		/// Handles authentication for Basic auth requests
 		/// </summary>
 		/// <returns>Task that results in an authentication ticket for credential or null for unauthorized request</returns>
@@ -23,29 +33,19 @@ namespace edjCase.BasicAuth
 			this.Logger?.LogVerbose("Basic auth handling started...");
 			try
 			{
-				string[] authHeaderValues;
-				bool hasAuthHeader = this.Request.Headers.TryGetValue(BasicAuthConstants.AuthHeaderName, out authHeaderValues) &&
-				                     authHeaderValues.Any();
-
-				if (!hasAuthHeader)
+				string basicAuthValue;
+				bool hasBasicAuthHeader = this.parser.TryParseBasicAuthHeader(this.Request.Headers, out basicAuthValue);
+				if (!hasBasicAuthHeader)
 				{
-					this.Logger?.LogVerbose("Request does not contain a Basic auth header. Skipping.");
-					return null; //TODO?
-				}
-				string basicAuthValue = authHeaderValues.First();
-				bool headerIsBasicAuth = basicAuthValue.StartsWith("Basic ");
-				if (!headerIsBasicAuth)
-				{
-					this.Logger?.LogVerbose("Request has an authentication header but is is not the Basic auth scheme. Skipping.");
-					return null; //TODO?
+					return null; //TODO
 				}
 				try
 				{
 					this.Logger?.LogInformation("Basic auth request detected. Authenticating...");
 
 					this.Logger?.LogVerbose("Attempting to parse Basic auth credential from header.");
-					BasicAuthCredential credential = BasicAuthCredential.Parse(basicAuthValue);
-					this.Logger?.LogVerbose("Successfully.");
+					BasicAuthCredential credential = this.parser.ParseCredential(basicAuthValue);
+					this.Logger?.LogVerbose($"Successfully parsed credential with username '{credential.Username}'.");
 
 					AuthenticationProperties authProperties = new AuthenticationProperties();
 
@@ -58,6 +58,14 @@ namespace edjCase.BasicAuth
 
 					this.Logger?.LogVerbose("Calling configured credential authentication handler.");
 					AuthenticationTicket ticket = await this.Options.AuthenticateCredential(authInfo);
+					if (ticket == null)
+					{
+						this.Logger?.LogInformation("Basic auth handler failed to create authentication ticket.");
+					}
+					else
+					{
+						this.Logger?.LogInformation("Basic auth handler successfully created authentication ticket.");
+					}
 					return ticket;
 				}
 				catch (Exception ex)
@@ -98,9 +106,10 @@ namespace edjCase.BasicAuth
 			}
 			finally
 			{
-				this.Logger?.LogVerbose("Basic auth handler finished.");
+				this.Logger?.LogInformation("Basic auth handler finished.");
 			}
 		}
+
 
 		/// <summary>
 		/// Handles unauthorized Basic auth requests

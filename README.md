@@ -16,6 +16,17 @@ Install-Package BasicAuth -Pre
 ## Usage
 Create a AspNet 5/Dnx Web Application, reference this library and in the `Startup` class configure the following:
 
+
+Add the dependency injected services in the `ConfigureServices` method:
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+	services.AddBasicAuth();
+	//Adds default IBasicAuthParser implementation to the services collection.
+	//(Can be overridden by custom implementations if desired)
+}
+```
+
 Add the JsonRpc router the pipeline in the `Configure` method:
 ```cs
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
