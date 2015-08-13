@@ -45,7 +45,10 @@ namespace edjCase.BasicAuth
 					Exception = ex
 				};
 
-				await this.Options.OnAuthFailed(failedNotification);
+				if (this.Options.OnException != null)
+				{
+					await this.Options.OnException(failedNotification);
+				}
 
 				if (failedNotification.HandledResponse)
 				{

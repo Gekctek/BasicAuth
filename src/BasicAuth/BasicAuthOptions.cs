@@ -17,6 +17,6 @@ namespace edjCase.BasicAuth
 		public string Realm { get; set; }
 
 		public Func<BasicAuthInfo, Task<AuthenticationTicket>> AuthenticateCredential { get; set; }
-		public Func<AuthenticationFailedNotification<string, BasicAuthOptions>, Task> OnAuthFailed { get; set; }
+		public Func<AuthenticationFailedNotification<string, BasicAuthOptions>, Task> OnException { get; set; }
 	}
 }

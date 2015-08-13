@@ -14,7 +14,7 @@ namespace Microsoft.AspNet.Builder
 			this IApplicationBuilder app, 
 			string realm, 
 			Func<BasicAuthInfo, Task<AuthenticationTicket>> authenticate, 
-			Func<AuthenticationFailedNotification<string, BasicAuthOptions>, Task> onAuthFailed = null, bool automaticAuthentication = false)
+			Func<AuthenticationFailedNotification<string, BasicAuthOptions>, Task> onException = null, bool automaticAuthentication = false)
 		{
 			if (string.IsNullOrWhiteSpace(realm))
 			{
@@ -28,9 +28,9 @@ namespace Microsoft.AspNet.Builder
 			{
 				options.Realm = realm;
 				options.AuthenticateCredential = authenticate;
-				if (onAuthFailed != null)
+				if (onException != null)
 				{
-					options.OnAuthFailed = onAuthFailed;
+					options.OnException = onException;
 				}
 				options.AutomaticAuthentication = automaticAuthentication;
 			};

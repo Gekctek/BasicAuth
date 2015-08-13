@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Authentication;
+using Microsoft.AspNet.Authentication.Notifications;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
@@ -30,8 +31,8 @@ namespace edjCase.BasicAuth.Sample
 		// Configure is called after ConfigureServices is called.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
-			app
-				.UseBasicAuth("Test", this.AuthenticateCredential, automaticAuthentication: true)
+			string realm = "Test"; //Replace with your Basic Auth realm
+			app.UseBasicAuth(realm, this.AuthenticateCredential, null, true)
 				.UseMvc();
 		}
 
