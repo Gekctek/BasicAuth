@@ -51,6 +51,8 @@ private Task OnException(AuthenticationFailedNotification<string, BasicAuthOptio
     //if...(should skip to next middleware)...failedNotifcation.SkipToNextMiddleware();
     //if...(want to alter response)...failedNotification.HttpContext.Response...
 }
+```
+
 ## Contributions
 
 Contributions welcome. Fork as much as you want. All pull requests will be considered.
