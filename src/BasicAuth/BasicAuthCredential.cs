@@ -3,17 +3,36 @@ using System.Text;
 
 namespace edjCase.BasicAuth
 {
+	/// <summary>
+	/// Contains Basic auth username and password
+	/// </summary>
 	public struct BasicAuthCredential
 	{
+		/// <summary>
+		/// Basic auth username
+		/// </summary>
 		public string Username { get; }
+		/// <summary>
+		/// Basic auth password
+		/// </summary>
 		public string Password { get; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="username">Basic auth username</param>
+		/// <param name="password">Basic auth password</param>
 		public BasicAuthCredential(string username, string password)
 		{
 			this.Username = username;
 			this.Password = password;
 		}
 
+		/// <summary>
+		/// Parses the Basic auth header into <see cref="BasicAuthCredential"/>
+		/// </summary>
+		/// <param name="basicAuthValue">Value of the Basic auth header</param>
+		/// <returns><see cref="BasicAuthCredential"/> with the username and password from Basic auth header</returns>
 		public static BasicAuthCredential Parse(string basicAuthValue)
 		{
 			if (string.IsNullOrWhiteSpace(basicAuthValue))

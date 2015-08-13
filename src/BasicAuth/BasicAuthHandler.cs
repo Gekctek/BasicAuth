@@ -3,14 +3,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Authentication;
 using Microsoft.AspNet.Authentication.Notifications;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Http.Features.Authentication;
 
 namespace edjCase.BasicAuth
 {
+	/// <summary>
+	/// Basic auth handler that handles authentication and unauthorized requests
+	/// </summary>
 	internal class BasicAuthHandler : AuthenticationHandler<BasicAuthOptions>
 	{
+		/// <summary>
+		/// Handles authentication for Basic auth requests
+		/// </summary>
+		/// <returns>Task that results in an authentication ticket for credential or null for unauthorized request</returns>
 		protected async override Task<AuthenticationTicket> HandleAuthenticateAsync()
 		{
 			string[] authHeaderValues;
@@ -34,6 +40,12 @@ namespace edjCase.BasicAuth
 				AuthenticationProperties authProperties = new AuthenticationProperties();
 
 				BasicAuthInfo authInfo = new BasicAuthInfo(credential, authProperties, this.Options);
+
+				if(this.Options.AuthenticateCredential == null)
+				{
+					throw new BasicAuthConfigurationException("AuthenticateCredential method was not set in the configuration");
+				}
+
 				AuthenticationTicket ticket = await this.Options.AuthenticateCredential(authInfo);
 				return ticket;
 			}
@@ -64,6 +76,11 @@ namespace edjCase.BasicAuth
 			}
 		}
 
+		/// <summary>
+		/// Handles unauthorized Basic auth requests
+		/// </summary>
+		/// <param name="context"></param>
+		/// <returns>True if response is handled</returns>
 		protected override Task<bool> HandleUnauthorizedAsync(ChallengeContext context)
 		{
 			this.Response.Headers.AppendValues("WWW-Authenticate", $"Basic realm=\"{this.Options.Realm}\"");
