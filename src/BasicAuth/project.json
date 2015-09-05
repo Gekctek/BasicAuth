@@ -1,5 +1,5 @@
 ﻿{
-	"version": "1.0.0-beta6-3",
+	"version": "1.0.0-beta7-4",
 	"description": "BasicAuth Middleware for DNX",
 	"summary": "BasicAuth Middleware for DNX",
 	"authors": [ "Gekctek" ],
@@ -7,23 +7,23 @@
 	"projectUrl": "https://github.com/Gekctek/BasicAuth",
 	"licenseUrl": "https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE",
 	"repository": { "type": "git" },
-	"releaseNotes": "Added logging with ILoggerFactory/ILogger. Added IBasicAuthParser interface for DI functionality. Now require calling AddBasicAuth in ConfigureServices method on Startup. ",
+	"releaseNotes": "Upgrading to beta7",
 
 	"dependencies": {
-		"Microsoft.AspNet.Http.Abstractions": "1.0.0-beta6",
-		"Microsoft.AspNet.Authentication": "1.0.0-beta6",
-		"Microsoft.Framework.Logging.Debug": "1.0.0-beta6"
+		"Microsoft.AspNet.Http.Abstractions": "1.0.0-beta7",
+		"Microsoft.AspNet.Authentication": "1.0.0-beta7",
+		"Microsoft.Framework.Logging.Debug": "1.0.0-beta7"
 	},
 
 	"frameworks": {
 		"dnx451": { },
 		"dnxcore50": {
 			"dependencies": {
-				"System.Collections": "4.0.10",
-				"System.Runtime": "4.0.20",
-				"System.Runtime.Serialization.Primitives": "4.0.10",
-				"System.Threading": "4.0.10",
-				"Microsoft.CSharp": "4.0.0"
+				"System.Collections": "4.0.11-beta-23225",
+				"System.Runtime": "4.0.21-beta-23225",
+				"System.Runtime.Serialization.Primitives": "4.0.11-beta-23225",
+				"System.Threading": "4.0.11-beta-23225",
+				"Microsoft.CSharp": "4.0.1-beta-23225"
 			}
 		}
 	}

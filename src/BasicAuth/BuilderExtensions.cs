@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using edjCase.BasicAuth;
 using edjCase.BasicAuth.Abstractions;
 using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Authentication.Notifications;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;

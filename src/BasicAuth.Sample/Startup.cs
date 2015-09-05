@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Authentication.Notifications;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
 using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Authentication.Notifications;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Http.Features.Authentication;
