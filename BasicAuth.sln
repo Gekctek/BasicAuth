@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B5878A7C-B4C4-43BA-BB99-D1C4F1779321}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		..\JsonRpc.Router\Nuget.config = ..\JsonRpc.Router\Nuget.config
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BasicAuth", "src\BasicAuth\BasicAuth.xproj", "{8C5FF846-279D-4DE9-9F4A-3770FAE894FE}"

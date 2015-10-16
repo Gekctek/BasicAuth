@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.Primitives;
 
 namespace edjCase.BasicAuth
 {
@@ -35,7 +36,7 @@ namespace edjCase.BasicAuth
 		/// <returns>True if has a valid Basic auth header, otherwise False</returns>
 		public bool TryParseBasicAuthHeader(IHeaderDictionary headers, out string basicAuthValue)
 		{
-			string[] authHeaderValues;
+			StringValues authHeaderValues;
 			bool hasAuthHeader = headers.TryGetValue(BasicAuthConstants.AuthHeaderName, out authHeaderValues) &&
 								 authHeaderValues.Any();
 

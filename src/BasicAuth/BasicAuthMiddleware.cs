@@ -16,12 +16,11 @@ namespace edjCase.BasicAuth
 		private IBasicAuthParser parser { get; }
 		public BasicAuthMiddleware(
 			RequestDelegate next, 
-			IOptions<BasicAuthOptions> options, 
+			BasicAuthOptions options, 
 			ILoggerFactory loggerFactory, 
-			IUrlEncoder encoder, 
-			ConfigureOptions<BasicAuthOptions> configureOptions,
+			IUrlEncoder encoder,
 			IBasicAuthParser parser) 
-			: base(next, options, loggerFactory, encoder, configureOptions)
+			: base(next, options, loggerFactory, encoder)
 		{
 			this.parser = parser;
 		}

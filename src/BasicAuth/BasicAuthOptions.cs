@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Authentication;
+using Microsoft.AspNet.Http;
 
 namespace edjCase.BasicAuth
 {
@@ -24,6 +25,6 @@ namespace edjCase.BasicAuth
 		/// <summary>
 		/// Optional function to handle, skip or throw exception that was caught during the basic auth processing
 		/// </summary>
-		public Func<AuthenticationFailedNotification<string, BasicAuthOptions>, Task> OnException { get; set; }
+		public Func<BasicAuthFailedContext, Task> OnException { get; set; }
 	}
 }
