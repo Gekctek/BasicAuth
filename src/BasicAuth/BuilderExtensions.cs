@@ -71,13 +71,15 @@ namespace Microsoft.AspNet.Builder
 		/// <param name="app"><see cref="IApplicationBuilder"/> that is supplied by Asp.Net</param>
 		/// <param name="options">Action to configure the Basic auth options</param>
 		/// <returns><see cref="IApplicationBuilder"/> that includes the Basic auth middleware</returns>
-		public static IApplicationBuilder UseBasicAuth(this IApplicationBuilder app, BasicAuthOptions options)
+		public static IApplicationBuilder UseBasicAuth(this IApplicationBuilder app, Action<BasicAuthOptions> options)
 		{
 			if (options == null)
 			{
 				throw new ArgumentNullException(nameof(options));
 			}
-			return app.UseMiddleware<BasicAuthMiddleware>(options);
+			BasicAuthOptions basicAuthOptions = new BasicAuthOptions();
+			options(basicAuthOptions);
+			return app.UseMiddleware<BasicAuthMiddleware>(basicAuthOptions);
 		}
 	}
 }
