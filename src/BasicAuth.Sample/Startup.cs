@@ -34,8 +34,13 @@ namespace edjCase.BasicAuth.Sample
 		{
 			loggerFactory.MinimumLevel = LogLevel.Debug;
 			loggerFactory.AddDebug(LogLevel.Debug);
-			string realm = "Test"; //Replace with your Basic Auth realm
-			app.UseBasicAuth(realm, this.AuthenticateCredential, null, true)
+
+			app
+				.UseBasicAuth(options =>
+				{
+					options.AuthenticateCredential = this.AuthenticateCredential;
+					options.AutomaticAuthentication = true;
+				})
 				.UseMvc();
 		}
 

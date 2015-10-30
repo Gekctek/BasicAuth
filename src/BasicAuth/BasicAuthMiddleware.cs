@@ -1,4 +1,5 @@
 ﻿using edjCase.BasicAuth.Abstractions;
+using edjCase.BasicAuth.Events;
 using Microsoft.AspNet.Authentication;
 using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
@@ -23,6 +24,11 @@ namespace edjCase.BasicAuth
 			: base(next, options, loggerFactory, encoder)
 		{
 			this.parser = parser;
+
+			if (this.Options.Events == null)
+			{
+				this.Options.Events = new BasicAuthEvents();
+			}
 		}
 
 		/// <summary>

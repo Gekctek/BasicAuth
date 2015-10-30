@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using edjCase.BasicAuth;
 using edjCase.BasicAuth.Abstractions;
+using edjCase.BasicAuth.Events;
 using Microsoft.AspNet.Authentication;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
@@ -27,42 +28,6 @@ namespace Microsoft.AspNet.Builder
 				ILogger logger = loggerrFactory?.CreateLogger("Basic Auth Parser");
 				return new DefaultBasicAuthParser(logger);
 			});
-		}
-
-		/// <summary>
-		/// Extension method to use the Basic auth middleware
-		/// </summary>
-		/// <param name="app"><see cref="IApplicationBuilder"/> that is supplied by Asp.Net</param>
-		/// <param name="realm">Basic Authentication Realm</param>
-		/// <param name="authenticate">Function to create an authentication ticket from Basic auth request if credentials are valid</param>
-		/// <param name="onException">Optional function to handle, skip or throw exception after exception is thrown during auth</param>
-		/// <param name="automaticAuthentication">True to call middleware for all requests. False to call middlware for only Basic auth requests. Defaults to false</param>
-		/// <returns><see cref="IApplicationBuilder"/> that includes the Basic auth middleware</returns>
-		public static IApplicationBuilder UseBasicAuth(
-			this IApplicationBuilder app, 
-			string realm, 
-			Func<BasicAuthInfo, Task<AuthenticationTicket>> authenticate, 
-			Func<BasicAuthFailedContext, Task> onException = null, bool automaticAuthentication = false)
-		{
-			if (string.IsNullOrWhiteSpace(realm))
-			{
-				throw new ArgumentNullException(nameof(realm));
-			}
-			if (authenticate == null)
-			{
-				throw new ArgumentNullException(nameof(authenticate));
-			}
-			var configureOptions = new BasicAuthOptions()
-			{
-				Realm = realm,
-				AuthenticateCredential = authenticate,
-				AutomaticAuthentication = automaticAuthentication
-			};
-			if (onException != null)
-			{
-				configureOptions.OnException = onException;
-			}
-			return app.UseMiddleware<BasicAuthMiddleware>(configureOptions);
 		}
 
 		/// <summary>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
+using edjCase.BasicAuth.Events;
 using Microsoft.AspNet.Authentication;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Authentication;
@@ -41,6 +42,20 @@ namespace edjCase.BasicAuth
 				try
 				{
 					this.Logger?.LogInformation("Basic auth request detected. Authenticating...");
+					var detectedContext = new BasicAuthDetectedContext(this.Context, this.Options);
+					await this.Options.Events.RequestDetected(detectedContext);
+
+					if (detectedContext.HandledResponse)
+					{
+						this.Logger?.LogInformation("Response was handled by the 'detected' event.");
+						return detectedContext.AuthenticationTicket;
+					}
+
+					if (detectedContext.Skipped)
+					{
+						this.Logger?.LogInformation("Authentication being skipped by the 'detected' event");
+						return null;
+					}
 
 					this.Logger?.LogVerbose("Attempting to parse Basic auth credential from header.");
 					BasicAuthCredential credential = this.parser.ParseCredential(basicAuthValue);
@@ -49,6 +64,23 @@ namespace edjCase.BasicAuth
 					AuthenticationProperties authProperties = new AuthenticationProperties();
 
 					BasicAuthInfo authInfo = new BasicAuthInfo(credential, authProperties, this.Options);
+
+
+					var parsedContext = new BasicAuthParsedContext(this.Context, this.Options);
+					await this.Options.Events.RequestParsed(parsedContext);
+
+					
+					if (detectedContext.HandledResponse)
+					{
+						this.Logger?.LogInformation("Response was handled by the 'request parsed' event.");
+						return detectedContext.AuthenticationTicket;
+					}
+
+					if (detectedContext.Skipped)
+					{
+						this.Logger?.LogInformation("Authentication being skipped by the 'request parsed' event");
+						return null;
+					}
 
 					if (this.Options.AuthenticateCredential == null)
 					{
@@ -60,10 +92,26 @@ namespace edjCase.BasicAuth
 					if (ticket == null)
 					{
 						this.Logger?.LogInformation("Basic auth handler failed to create authentication ticket.");
+						var failedContext = new BasicAuthFailedContext(this.Context, this.Options);
+						await this.Options.Events.AuthenticationFailed(failedContext);
+
+						if (failedContext.HandledResponse)
+						{
+							this.Logger?.LogInformation("Failed auth was handled by configured exception handler.");
+							return failedContext.AuthenticationTicket;
+						}
+
+						if (failedContext.Skipped)
+						{
+							this.Logger?.LogInformation("Failed auth resulted in skipping of Basic auth processing.");
+							return null;
+						}
 					}
 					else
 					{
 						this.Logger?.LogInformation("Basic auth handler successfully created authentication ticket.");
+						BasicAuthValidatedContext validatedContext = new BasicAuthValidatedContext(this.Context, this.Options);
+						await this.Options.Events.RequestValidated(validatedContext);
 					}
 					return ticket;
 				}
@@ -75,16 +123,9 @@ namespace edjCase.BasicAuth
 					{
 						Exception = ex
 					};
-
-					if (this.Options.OnException != null)
-					{
-						this.Logger?.LogVerbose("Calling configured exception handler.");
-						await this.Options.OnException(failedContext);
-					}
-					else
-					{
-						this.Logger?.LogVerbose("No configured exception handler found.");
-					}
+					
+					this.Logger?.LogVerbose("Calling configured exception handler.");
+					await this.Options.Events.AuthenticationFailed(failedContext);
 
 					if (failedContext.HandledResponse)
 					{
@@ -114,24 +155,16 @@ namespace edjCase.BasicAuth
 		/// </summary>
 		/// <param name="context">Context of authentication challenge</param>
 		/// <returns>True if response is handled</returns>
-		protected override Task<bool> HandleUnauthorizedAsync(ChallengeContext context)
+		protected override async Task<bool> HandleUnauthorizedAsync(ChallengeContext context)
 		{
 			this.Logger?.LogInformation("Handling unauthorized Basic auth request.");
-			this.Response.Headers.AppendCommaSeparatedValues("WWW-Authenticate", $"Basic realm=\"{this.Options.Realm}\"");
 			this.Response.StatusCode = 401; //Unauthorized
-			return Task.FromResult(true);
-		}
 
-		public override async Task<bool> InvokeAsync()
-		{
-			AuthenticationTicket ticket = await this.HandleAuthenticateOnceAsync();
-			if (ticket == null)
-			{
-				this.Response.StatusCode = 401;
-			}
-			return true;
+			var challengeContext = new BasicAuthChallengeContext(this.Context, this.Options);
+			await this.Options.Events.Challenge(challengeContext);
+			return false;
 		}
-
+		
 		protected override Task HandleSignOutAsync(SignOutContext context)
 		{
 			throw new NotSupportedException();

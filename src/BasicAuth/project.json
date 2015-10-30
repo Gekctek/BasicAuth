@@ -1,5 +1,5 @@
 ﻿{
-	"version": "1.0.0-beta8-6",
+	"version": "1.0.0-beta8-7",
 	"description": "BasicAuth Middleware for DNX",
 	"summary": "BasicAuth Middleware for DNX",
 	"authors": [ "Gekctek" ],
@@ -7,7 +7,7 @@
 	"projectUrl": "https://github.com/Gekctek/BasicAuth",
 	"licenseUrl": "https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE",
 	"repository": { "type": "git" },
-	"releaseNotes": "Fixing beta8 options creator",
+	"releaseNotes": "Adding configurable Basic Auth Events that will fire throughout the middleware process",
 
 	"dependencies": {
 		"Microsoft.AspNet.Http.Abstractions": "1.0.0-beta8",
