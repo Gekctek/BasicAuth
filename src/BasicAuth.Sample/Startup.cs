@@ -10,8 +10,8 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Routing;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace edjCase.BasicAuth.Sample
 {
@@ -39,7 +39,8 @@ namespace edjCase.BasicAuth.Sample
 				.UseBasicAuth(options =>
 				{
 					options.AuthenticateCredential = this.AuthenticateCredential;
-					options.AutomaticAuthentication = true;
+					options.AutomaticAuthenticate = true;
+					options.AutomaticChallenge = true;
 				})
 				.UseMvc();
 		}

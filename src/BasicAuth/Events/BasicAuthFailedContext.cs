@@ -7,7 +7,7 @@ namespace edjCase.BasicAuth.Events
 	/// <summary>
 	/// When a user configures the <see cref="BasicAuthMiddleware"/> to be notified prior to handling the exception
 	/// </summary>
-	public class BasicAuthFailedContext : BaseControlContext<BasicAuthOptions>
+	public class BasicAuthFailedContext : BaseBasicAuthContext
 	{
 		public BasicAuthFailedContext(HttpContext context, BasicAuthOptions options) 
 			: base(context, options)

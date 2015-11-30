@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
 using Microsoft.AspNet.Http;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.Primitives;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 
 namespace edjCase.BasicAuth
 {
@@ -42,7 +42,7 @@ namespace edjCase.BasicAuth
 
 			if (!hasAuthHeader)
 			{
-				this.logger?.LogVerbose("Request does not contain a Basic auth header. Skipping.");
+				this.logger?.LogVerbose("Request does not contain a Basic auth header.");
 				basicAuthValue = null;
 				return false;
 			}
@@ -50,7 +50,7 @@ namespace edjCase.BasicAuth
 			bool headerIsBasicAuth = basicAuthValue.StartsWith("Basic ");
 			if (!headerIsBasicAuth)
 			{
-				this.logger?.LogVerbose("Request has an authentication header but is is not the Basic auth scheme. Skipping.");
+				this.logger?.LogVerbose("Request has an authentication header but is is not the Basic auth scheme.");
 				basicAuthValue = null;
 				return false;
 			}

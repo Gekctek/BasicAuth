@@ -2,10 +2,10 @@
 using edjCase.BasicAuth.Events;
 using Microsoft.AspNet.Authentication;
 using Microsoft.AspNet.Builder;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.OptionsModel;
-using Microsoft.Framework.WebEncoders;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.WebEncoders;
 
 namespace edjCase.BasicAuth
 {

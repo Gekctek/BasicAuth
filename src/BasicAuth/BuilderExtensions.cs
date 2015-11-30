@@ -4,8 +4,8 @@ using edjCase.BasicAuth;
 using edjCase.BasicAuth.Abstractions;
 using edjCase.BasicAuth.Events;
 using Microsoft.AspNet.Authentication;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNet.Builder

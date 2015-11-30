@@ -11,7 +11,7 @@ namespace edjCase.BasicAuth.Events
 	/// When a user configures the <see cref="BasicAuthMiddleware"/> to be notified after the basic
 	/// auth request has been parsed but before validating the request
 	/// </summary>
-	public class BasicAuthParsedContext : BaseControlContext<BasicAuthOptions>
+	public class BasicAuthParsedContext : BaseBasicAuthContext
 	{
 		public BasicAuthParsedContext(HttpContext context, BasicAuthOptions options) 
 			: base(context, options)

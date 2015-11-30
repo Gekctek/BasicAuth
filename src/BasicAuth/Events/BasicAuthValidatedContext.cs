@@ -11,11 +11,11 @@ namespace edjCase.BasicAuth.Events
 	/// When a user configures the <see cref="BasicAuthMiddleware"/> to be notified after the basic
 	/// auth request has been validated but before ending the request
 	/// </summary>
-	public class BasicAuthValidatedContext : BaseControlContext<BasicAuthOptions>
-    {
-	    public BasicAuthValidatedContext(HttpContext context, BasicAuthOptions options) 
+	public class BasicAuthValidatedContext : BaseBasicAuthContext
+	{
+		public BasicAuthValidatedContext(HttpContext context, BasicAuthOptions options)
 			: base(context, options)
-	    {
-	    }
-    }
+		{
+		}
+	}
 }
