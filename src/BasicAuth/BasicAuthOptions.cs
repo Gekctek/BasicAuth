@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Authentication.Notifications;
+using edjCase.BasicAuth.Abstractions;
+using edjCase.BasicAuth.Events;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
 
 namespace edjCase.BasicAuth
 {
@@ -12,19 +15,22 @@ namespace edjCase.BasicAuth
 	{
 		public BasicAuthOptions()
 		{
-			this.AuthenticationScheme = "Basic";
+			this.AuthenticationScheme = BasicAuthConstants.AuthScheme;
 		}
+
 		/// <summary>
 		/// Basic authentication realm
 		/// </summary>
 		public string Realm { get; set; } = "localhost";
+
 		/// <summary>
 		/// Required function to check request credential and create authentication ticket
 		/// </summary>
 		public Func<BasicAuthInfo, Task<AuthenticationTicket>> AuthenticateCredential { get; set; }
+		
 		/// <summary>
-		/// Optional function to handle, skip or throw exception that was caught during the basic auth processing
+		/// The object provided by the application to process events raised by the basic authentication middleware.
 		/// </summary>
-		public Func<AuthenticationFailedNotification<string, BasicAuthOptions>, Task> OnException { get; set; }
+		public IBasicAuthEvents Events { get; set; } = new BasicAuthEvents();
 	}
 }

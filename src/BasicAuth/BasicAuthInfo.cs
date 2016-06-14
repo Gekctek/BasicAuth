@@ -1,7 +1,7 @@
 ﻿using System;
-using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Authentication;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Authentication;
 
 namespace edjCase.BasicAuth
 {

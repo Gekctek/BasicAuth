@@ -1,10 +1,13 @@
 ﻿using edjCase.BasicAuth.Abstractions;
-using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Builder;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.OptionsModel;
-using Microsoft.Framework.WebEncoders;
+using edjCase.BasicAuth.Events;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 
 namespace edjCase.BasicAuth
 {
@@ -15,15 +18,19 @@ namespace edjCase.BasicAuth
 	{
 		private IBasicAuthParser parser { get; }
 		public BasicAuthMiddleware(
-			RequestDelegate next, 
-			IOptions<BasicAuthOptions> options, 
-			ILoggerFactory loggerFactory, 
-			IUrlEncoder encoder, 
-			ConfigureOptions<BasicAuthOptions> configureOptions,
-			IBasicAuthParser parser) 
-			: base(next, options, loggerFactory, encoder, configureOptions)
+			RequestDelegate next,
+			IOptions<BasicAuthOptions> options,
+			ILoggerFactory loggerFactory,
+			UrlEncoder encoder,
+			IBasicAuthParser parser)
+			: base(next, options, loggerFactory, encoder)
 		{
 			this.parser = parser;
+
+			if (this.Options.Events == null)
+			{
+				this.Options.Events = new BasicAuthEvents();
+			}
 		}
 
 		/// <summary>
