@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
 using edjCase.BasicAuth.Events;
-using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Authentication;
-using Microsoft.AspNet.Http.Features.Authentication;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.AspNetCore.Http.Features.Authentication;
 using Microsoft.Extensions.Logging;
 
 namespace edjCase.BasicAuth
@@ -30,14 +30,14 @@ namespace edjCase.BasicAuth
 		/// <returns>Task that results in an authentication ticket for credential or null for unauthorized request</returns>
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
-			this.Logger?.LogVerbose("Basic auth handling started...");
+			this.Logger?.LogDebug("Basic auth handling started...");
 			try
 			{
 				string basicAuthValue;
 				bool hasBasicAuthHeader = this.parser.TryParseBasicAuthHeader(this.Request.Headers, out basicAuthValue);
 				if (!hasBasicAuthHeader)
 				{
-					return AuthenticateResult.Failed("No authorization header.");
+					return AuthenticateResult.Fail("No authorization header.");
 				}
 				try
 				{
@@ -48,7 +48,7 @@ namespace edjCase.BasicAuth
 					if (detectedContext.HandledResponse)
 					{
 						this.Logger?.LogInformation("Response was handled by the 'detected' event.");
-						return AuthenticateResult.Success(detectedContext.AuthenticationTicket);
+						return AuthenticateResult.Success(detectedContext.Ticket);
 					}
 
 					if (detectedContext.Skipped)
@@ -57,9 +57,9 @@ namespace edjCase.BasicAuth
 						return AuthenticateResult.Success(null);
 					}
 
-					this.Logger?.LogVerbose("Attempting to parse Basic auth credential from header.");
+					this.Logger?.LogDebug("Attempting to parse Basic auth credential from header.");
 					BasicAuthCredential credential = this.parser.ParseCredential(basicAuthValue);
-					this.Logger?.LogVerbose($"Successfully parsed credential with username '{credential.Username}'.");
+					this.Logger?.LogDebug($"Successfully parsed credential with username '{credential.Username}'.");
 
 					AuthenticationProperties authProperties = new AuthenticationProperties();
 
@@ -69,17 +69,17 @@ namespace edjCase.BasicAuth
 					var parsedContext = new BasicAuthParsedContext(this.Context, this.Options);
 					await this.Options.Events.RequestParsed(parsedContext);
 
-					
-					if (detectedContext.HandledResponse)
+
+					if (detectedContext.HandledResponse && detectedContext.Ticket != null)
 					{
 						this.Logger?.LogInformation("Response was handled by the 'request parsed' event.");
-						return AuthenticateResult.Success(detectedContext.AuthenticationTicket);
+						return AuthenticateResult.Success(detectedContext.Ticket);
 					}
 
 					if (detectedContext.Skipped)
 					{
 						this.Logger?.LogInformation("Authentication being skipped by the 'request parsed' event");
-						return AuthenticateResult.Success(null);
+						return AuthenticateResult.Skip();
 					}
 
 					if (this.Options.AuthenticateCredential == null)
@@ -87,7 +87,7 @@ namespace edjCase.BasicAuth
 						throw new BasicAuthConfigurationException("AuthenticateCredential method was not set in the configuration");
 					}
 
-					this.Logger?.LogVerbose("Calling configured credential authentication handler.");
+					this.Logger?.LogDebug("Calling configured credential authentication handler.");
 					AuthenticationTicket ticket = await this.Options.AuthenticateCredential(authInfo);
 					if (ticket == null)
 					{
@@ -95,25 +95,25 @@ namespace edjCase.BasicAuth
 						var failedContext = new BasicAuthFailedContext(this.Context, this.Options);
 						await this.Options.Events.AuthenticationFailed(failedContext);
 
-						if (failedContext.HandledResponse)
+						if (failedContext.HandledResponse && failedContext.Ticket != null)
 						{
 							this.Logger?.LogInformation("Failed auth was handled by configured exception handler.");
-							return AuthenticateResult.Success(detectedContext.AuthenticationTicket);
+							return AuthenticateResult.Success(failedContext.Ticket);
 						}
 
 						if (failedContext.Skipped)
 						{
 							this.Logger?.LogInformation("Failed auth resulted in skipping of Basic auth processing.");
-							return AuthenticateResult.Success(null);
+							return AuthenticateResult.Skip();
 						}
+
+						return AuthenticateResult.Fail("Failed to authenticate.");
 					}
-					else
-					{
-						this.Logger?.LogInformation("Basic auth handler successfully created authentication ticket.");
-						BasicAuthValidatedContext validatedContext = new BasicAuthValidatedContext(this.Context, this.Options);
-						await this.Options.Events.RequestValidated(validatedContext);
-					}
+					this.Logger?.LogInformation("Basic auth handler successfully created authentication ticket.");
+					BasicAuthValidatedContext validatedContext = new BasicAuthValidatedContext(this.Context, this.Options);
+					await this.Options.Events.RequestValidated(validatedContext);
 					return AuthenticateResult.Success(ticket);
+
 				}
 				catch (Exception ex)
 				{
@@ -123,14 +123,14 @@ namespace edjCase.BasicAuth
 					{
 						Exception = ex
 					};
-					
-					this.Logger?.LogVerbose("Calling configured exception handler.");
+
+					this.Logger?.LogDebug("Calling configured exception handler.");
 					await this.Options.Events.AuthenticationFailed(failedContext);
 
 					if (failedContext.HandledResponse)
 					{
 						this.Logger?.LogInformation("Error was handled by configured exception handler.");
-						return AuthenticateResult.Success(failedContext.AuthenticationTicket);
+						return AuthenticateResult.Success(failedContext.Ticket);
 					}
 
 					if (failedContext.Skipped)

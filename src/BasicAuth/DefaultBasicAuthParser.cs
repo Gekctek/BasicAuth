@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
@@ -42,7 +42,7 @@ namespace edjCase.BasicAuth
 
 			if (!hasAuthHeader)
 			{
-				this.logger?.LogVerbose("Request does not contain a Basic auth header.");
+				this.logger?.LogDebug("Request does not contain a Basic auth header.");
 				basicAuthValue = null;
 				return false;
 			}
@@ -50,7 +50,7 @@ namespace edjCase.BasicAuth
 			bool headerIsBasicAuth = basicAuthValue.StartsWith("Basic ");
 			if (!headerIsBasicAuth)
 			{
-				this.logger?.LogVerbose("Request has an authentication header but is is not the Basic auth scheme.");
+				this.logger?.LogDebug("Request has an authentication header but is is not the Basic auth scheme.");
 				basicAuthValue = null;
 				return false;
 			}
@@ -76,7 +76,7 @@ namespace edjCase.BasicAuth
 			{
 				string base64Credential = basicAuthValue.Substring(6); //6 = Length of 'Basic '
 				byte[] credentialBytes = Convert.FromBase64String(base64Credential);
-				credentialString = Encoding.UTF8.GetString(credentialBytes);
+				credentialString = Encoding.UTF8.GetString(credentialBytes, 0, credentialBytes.Length);
 			}
 			catch (Exception ex)
 			{

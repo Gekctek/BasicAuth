@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace edjCase.BasicAuth.Events
 {

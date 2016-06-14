@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using edjCase.BasicAuth;
 using edjCase.BasicAuth.Abstractions;
 using edjCase.BasicAuth.Events;
-using Microsoft.AspNet.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.AspNet.Builder
+namespace Microsoft.AspNetCore.Builder
 {
 	/// <summary>
 	/// Extension class to add Basic auth middleware to Asp.Net pipeline
@@ -44,7 +45,8 @@ namespace Microsoft.AspNet.Builder
 			}
 			BasicAuthOptions basicAuthOptions = new BasicAuthOptions();
 			options(basicAuthOptions);
-			return app.UseMiddleware<BasicAuthMiddleware>(basicAuthOptions);
+
+			return app.UseMiddleware<BasicAuthMiddleware>(Options.Create(basicAuthOptions));
 		}
 	}
 }

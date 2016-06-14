@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using edjCase.BasicAuth.Abstractions;
 using edjCase.BasicAuth.Events;
-using Microsoft.AspNet.Authentication;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
 
 namespace edjCase.BasicAuth
 {
