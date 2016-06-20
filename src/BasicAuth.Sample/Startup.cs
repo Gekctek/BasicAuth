@@ -50,11 +50,11 @@ namespace edjCase.BasicAuth.Sample
 			AuthenticationTicket ticket = null;
 			if (authInfo.Credential.Username == "Test" && authInfo.Credential.Password == "Password")
 			{
-				ClaimsIdentity identity = new ClaimsIdentity(authInfo.Options.AuthenticationScheme);
+				ClaimsIdentity identity = new ClaimsIdentity(authInfo.AuthenticationScheme);
 				identity.AddClaim(new Claim(ClaimTypes.Name, "Test"));
 				identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "TestId"));
 				ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-				ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.Options.AuthenticationScheme);
+				ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.AuthenticationScheme);
 			}
 			return Task.FromResult(ticket);
 		}

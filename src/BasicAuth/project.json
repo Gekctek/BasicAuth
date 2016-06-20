@@ -1,5 +1,5 @@
 ﻿{
-	"version": "1.0.0-rc2-001",
+	"version": "1.0.0-rc2-002",
 	"description": "BasicAuth Middleware for AspNet Core",
 	"packOptions": {
 		"summary": "BasicAuth Middleware for AspNet Core",
@@ -7,7 +7,7 @@
 		"projectUrl": "https://github.com/Gekctek/BasicAuth",
 		"licenseUrl": "https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE",
 		"repository": { "type": "git" },
-		"releaseNotes": "Upgrading to RC2"
+		"releaseNotes": "Adding httpcontext to BasicAuthInfo object."
 	},
 	"authors": [ "Gekctek" ],
 

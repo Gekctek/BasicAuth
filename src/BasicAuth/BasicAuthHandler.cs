@@ -63,7 +63,7 @@ namespace edjCase.BasicAuth
 
 					AuthenticationProperties authProperties = new AuthenticationProperties();
 
-					BasicAuthInfo authInfo = new BasicAuthInfo(credential, authProperties, this.Options);
+					BasicAuthInfo authInfo = new BasicAuthInfo(credential, authProperties, this.Context, this.Options.AuthenticationScheme);
 
 
 					var parsedContext = new BasicAuthParsedContext(this.Context, this.Options);
