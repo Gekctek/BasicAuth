@@ -7,9 +7,10 @@
 		"projectUrl": "https://github.com/Gekctek/BasicAuth",
 		"licenseUrl": "https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE",
 		"repository": { "type": "git" },
-		"releaseNotes": "Upgrading to RTM"
+		"releaseNotes": "Upgrading to RTM",
 	},
 	"authors": [ "Gekctek" ],
+	"title": "TestTest",
 
 	"dependencies": {
 		"Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
@@ -18,7 +19,7 @@
 	},
 
 	"frameworks": {
-		"net451": { },
+		"net451": {},
 		"netstandard1.1": {
 			"dependencies": {
 				"System.Collections": "4.0.11",
