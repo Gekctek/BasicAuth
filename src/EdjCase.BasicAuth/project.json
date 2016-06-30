@@ -10,7 +10,6 @@
 		"releaseNotes": "Upgrading to RTM",
 	},
 	"authors": [ "Gekctek" ],
-	"title": "TestTest",
 
 	"dependencies": {
 		"Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
