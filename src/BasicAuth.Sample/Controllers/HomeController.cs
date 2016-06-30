@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace edjCase.BasicAuth.Sample.Controllers
+namespace EdjCase.BasicAuth.Sample.Controllers
 {
 	[Authorize]
 	[Route("Home")]

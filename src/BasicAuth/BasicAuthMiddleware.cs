@@ -1,5 +1,5 @@
-﻿using edjCase.BasicAuth.Abstractions;
-using edjCase.BasicAuth.Events;
+﻿using EdjCase.BasicAuth.Abstractions;
+using EdjCase.BasicAuth.Events;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.WebEncoders;
 using System.Text.Encodings.Web;
 
-namespace edjCase.BasicAuth
+namespace EdjCase.BasicAuth
 {
 	/// <summary>
 	/// Basic auth authentication middleware

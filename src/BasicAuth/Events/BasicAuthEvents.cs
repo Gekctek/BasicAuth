@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using edjCase.BasicAuth.Abstractions;
+using EdjCase.BasicAuth.Abstractions;
 using Microsoft.AspNetCore.Http;
 
-namespace edjCase.BasicAuth.Events
+namespace EdjCase.BasicAuth.Events
 {
 	public class BasicAuthEvents : IBasicAuthEvents
 	{

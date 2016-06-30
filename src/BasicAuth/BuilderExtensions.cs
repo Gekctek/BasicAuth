@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using edjCase.BasicAuth;
-using edjCase.BasicAuth.Abstractions;
-using edjCase.BasicAuth.Events;
+using EdjCase.BasicAuth;
+using EdjCase.BasicAuth.Abstractions;
+using EdjCase.BasicAuth.Events;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

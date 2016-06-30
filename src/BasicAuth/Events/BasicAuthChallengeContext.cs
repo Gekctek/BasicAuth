@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 
-namespace edjCase.BasicAuth.Events
+namespace EdjCase.BasicAuth.Events
 {
 	/// <summary>
 	/// When a user configures the <see cref="BasicAuthMiddleware"/> to be notified after the basic

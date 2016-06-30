@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using edjCase.BasicAuth.Abstractions;
-using edjCase.BasicAuth.Events;
+using EdjCase.BasicAuth.Abstractions;
+using EdjCase.BasicAuth.Events;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Http.Features.Authentication;
 using Microsoft.Extensions.Logging;
 
-namespace edjCase.BasicAuth
+namespace EdjCase.BasicAuth
 {
 	/// <summary>
 	/// Basic auth handler that handles authentication and unauthorized requests

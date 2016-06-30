@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 
-namespace edjCase.BasicAuth.Events
+namespace EdjCase.BasicAuth.Events
 {
 	public class BaseBasicAuthContext : BaseControlContext
 	{

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace edjCase.BasicAuth
+namespace EdjCase.BasicAuth
 {
 	/// <summary>
 	/// Base Basic auth exception

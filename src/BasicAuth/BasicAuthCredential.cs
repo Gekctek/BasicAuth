@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace edjCase.BasicAuth
+namespace EdjCase.BasicAuth
 {
 	/// <summary>
 	/// Contains Basic auth username and password

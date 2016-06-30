@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using edjCase.BasicAuth.Events;
+using EdjCase.BasicAuth.Events;
 
-namespace edjCase.BasicAuth.Abstractions
+namespace EdjCase.BasicAuth.Abstractions
 {
 	/// <summary>
 	/// Basic auth middleware events.

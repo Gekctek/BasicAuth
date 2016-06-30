@@ -1,4 +1,4 @@
-﻿namespace edjCase.BasicAuth
+﻿namespace EdjCase.BasicAuth
 {
 	/// <summary>
 	/// Constants relating to Basic auth

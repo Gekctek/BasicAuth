@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Authentication;
 
-namespace edjCase.BasicAuth
+namespace EdjCase.BasicAuth
 {
 	/// <summary>
 	/// Container object that holds the basic auth credential, properties and options for the request

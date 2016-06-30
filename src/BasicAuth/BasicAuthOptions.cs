@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using edjCase.BasicAuth.Abstractions;
-using edjCase.BasicAuth.Events;
+using EdjCase.BasicAuth.Abstractions;
+using EdjCase.BasicAuth.Events;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 
-namespace edjCase.BasicAuth
+namespace EdjCase.BasicAuth
 {
 	/// <summary>
 	/// Configuration options for using basic authentication middleware.
