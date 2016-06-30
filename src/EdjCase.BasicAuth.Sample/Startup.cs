@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using EdjCase.BasicAuth.Events;
 
 namespace EdjCase.BasicAuth.Sample
 {
@@ -34,6 +35,10 @@ namespace EdjCase.BasicAuth.Sample
 					options.AuthenticateCredential = this.AuthenticateCredential;
 					options.AutomaticAuthenticate = true;
 					options.AutomaticChallenge = true;
+					options.Events = new BasicAuthEvents
+					{
+						OnAuthenticationFailed = this.OnAuthenticationFailed
+					};
 				})
 				.UseMvc();
 		}
@@ -50,6 +55,13 @@ namespace EdjCase.BasicAuth.Sample
 				ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.AuthenticationScheme);
 			}
 			return Task.FromResult(ticket);
+		}
+
+		private Task OnAuthenticationFailed(BasicAuthFailedContext context)
+		{
+			//if...(something that can be handled)...context.HandleResponse();
+			//if...(should skip to next middleware)...context.SkipToNextMiddleware();
+			return Task.FromResult(0);
 		}
 	}
 

@@ -1,16 +1,16 @@
 # BasicAuth
-Basic Auth Middleware for Dnx (frameworks: dnx451, dnxcore50)
+Basic Auth Middleware for AspNet Core (frameworks: net451, netstandard1.1)
 
 ## Installation
-##### NuGet: [BasicAuth](https://www.nuget.org/packages/BasicAuth)
+##### NuGet: [BasicAuth](https://www.nuget.org/packages/ EdjCase.BasicAuth)
 
 using nuget command line:
 ```cs
-Install-Package BasicAuth
+Install-Package EdjCase.BasicAuth
 ```
 or for pre-release versions:
 ```cs
-Install-Package BasicAuth -Pre
+Install-Package EdjCase.BasicAuth -Pre
 ```
 
 ## Usage
@@ -31,9 +31,17 @@ Add the JsonRpc router the pipeline in the `Configure` method:
 ```cs
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 {
-    string realm = "YourRealm"; //Replace with your Basic Auth realm
-    bool automaticAuthentication = true; //Defaults to false. True means its will auth all requests, False means it will only auth basic auth requests
-	app.UseBasicAuth(realm, this.AuthenticateCredential, this.OnException, automaticAuthentication);
+	app.UseBasicAuth(options => 
+	{
+	    options.Realm = "YourRealm"; //Replace with your Basic Auth realm
+        options.AuthenticateCredential = this.AuthenticateCredential;
+        options.AutomaticAuthenticate = true; //Defaults to false. True means its will auth all requests, False means it will only auth basic auth requests
+        options.AutomaticChallenge = true; 
+		options.Events = new BasicAuthEvents
+		{
+			OnAuthenticationFailed = this.OnAuthenticationFailed
+		};
+	});
 }
 
 //Custom (and required) method that you will use to check the basic auth credential
@@ -44,23 +52,22 @@ private Task<AuthenticationTicket> AuthenticateCredential(BasicAuthInfo authInfo
 	AuthenticationTicket ticket = null;
 	if (authInfo.Credential.Username == "Test" && authInfo.Credential.Password == "Password")
 	{
-		ClaimsIdentity identity = new ClaimsIdentity(authInfo.Options.AuthenticationScheme);
+		ClaimsIdentity identity = new ClaimsIdentity(authInfo.AuthenticationScheme);
 		identity.AddClaim(new Claim(ClaimTypes.Name, "Test"));
 		identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "TestId"));
 		ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-		ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.Options.AuthenticationScheme);
+		ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.AuthenticationScheme);
 	}
 	return Task.FromResult(ticket);
 }
 
-//Optional method to handle the exception thrown by the basic auth process
-//The exception is in the failedNotification object and any Exception that this library throws is a
-//child class of the BasicAuthException class
-private Task OnException(AuthenticationFailedNotification<string, BasicAuthOptions> failedNotification)
+//Optional method to handle the failure in the basic auth process
+//The failure details are in the context object
+private Task OnAuthenticationFailed(BasicAuthFailedContext context)
 {
-    //if...(something that can be handled)...failedNotification.HandleResponse();
-    //if...(should skip to next middleware)...failedNotifcation.SkipToNextMiddleware();
-    //if...(want to alter response)...failedNotification.HttpContext.Response...
+	//if...(something that can be handled)...context.HandleResponse();
+	//if...(should skip to next middleware)...context.SkipToNextMiddleware();
+	return Task.FromResult(0);
 }
 ```
 
@@ -82,7 +89,6 @@ If you do not want to contribute directly, feel free to do bug/feature requests 
 
  - Better sample app
  - Performance testing
- - Keep up to date with latest aspnet beta
 
 License
 ----
