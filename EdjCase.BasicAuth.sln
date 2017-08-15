@@ -1,19 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F1765D48-8DF5-4080-A052-F7DA465FF064}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B5878A7C-B4C4-43BA-BB99-D1C4F1779321}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		Nuget.config = Nuget.config
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EdjCase.BasicAuth", "src\EdjCase.BasicAuth\EdjCase.BasicAuth.xproj", "{8C5FF846-279D-4DE9-9F4A-3770FAE894FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdjCase.BasicAuth", "src\EdjCase.BasicAuth\EdjCase.BasicAuth.csproj", "{8C5FF846-279D-4DE9-9F4A-3770FAE894FE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EdjCase.BasicAuth.Sample", "src\EdjCase.BasicAuth.Sample\EdjCase.BasicAuth.Sample.xproj", "{4AD13097-39C8-4671-9D7F-A383DA69AC67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdjCase.BasicAuth.Sample", "src\EdjCase.BasicAuth.Sample\EdjCase.BasicAuth.Sample.csproj", "{4AD13097-39C8-4671-9D7F-A383DA69AC67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +35,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8C5FF846-279D-4DE9-9F4A-3770FAE894FE} = {F1765D48-8DF5-4080-A052-F7DA465FF064}
 		{4AD13097-39C8-4671-9D7F-A383DA69AC67} = {F1765D48-8DF5-4080-A052-F7DA465FF064}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACA37B26-5FBA-4EC9-B2BD-2993623DCDC2}
 	EndGlobalSection
 EndGlobal

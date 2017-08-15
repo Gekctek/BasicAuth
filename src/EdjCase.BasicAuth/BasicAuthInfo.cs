@@ -17,7 +17,7 @@ namespace EdjCase.BasicAuth
 		/// <summary>
 		/// Gets the Basic auth properties from the request
 		/// </summary>
-		public AuthenticationProperties Properties { get; }
+		public Microsoft.AspNetCore.Authentication.AuthenticationProperties Properties { get; }
 		/// <summary>
 		/// Gets the http context from the request
 		/// </summary>
@@ -25,21 +25,21 @@ namespace EdjCase.BasicAuth
 		/// <summary>
 		/// Gets the authentication scheme from configuration
 		/// </summary>
-		public string AuthenticationScheme { get; }
+		public string Scheme { get; }
 
 		/// <summary>
 		/// Main constructor to create <see cref="BasicAuthInfo"/>
 		/// </summary>
 		/// <param name="credential">Basic auth credential from the request</param>
-		/// <param name="properties">Basic auth properties from the request</param>
 		/// <param name="httpContext">Context from the request</param>
 		/// <param name="authenticationScheme">Authentication scheme from the configuration</param>
-		internal BasicAuthInfo(BasicAuthCredential credential, AuthenticationProperties properties, HttpContext httpContext, string authenticationScheme)
+		internal BasicAuthInfo(BasicAuthCredential credential, Microsoft.AspNetCore.Authentication.AuthenticationProperties authenticationProperties, 
+			HttpContext httpContext, string authenticationScheme)
 		{
 			this.Credential = credential;
-			this.Properties = properties;
 			this.HttpContext = httpContext;
-			this.AuthenticationScheme = authenticationScheme;
+			this.Properties = authenticationProperties;
+			this.Scheme = authenticationScheme;
 		}
 	}
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using EdjCase.BasicAuth.Events;
+using System;
 
 namespace EdjCase.BasicAuth.Sample
 {
@@ -20,7 +21,16 @@ namespace EdjCase.BasicAuth.Sample
 		// Use this method to add services to the container
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddBasicAuth();
+			services
+				.AddAuthentication(BasicAuthConstants.AuthScheme)
+				.AddBasicAuth(options =>
+				{
+					options.AuthenticateCredential = this.AuthenticateCredential;
+					options.Events = new BasicAuthEvents
+					{
+						OnAuthenticationFailed = this.OnAuthenticationFailed
+					};
+				});
 			services.AddMvc();
 		}
 
@@ -30,16 +40,7 @@ namespace EdjCase.BasicAuth.Sample
 			loggerFactory.AddDebug(LogLevel.Debug);
 
 			app
-				.UseBasicAuth(options =>
-				{
-					options.AuthenticateCredential = this.AuthenticateCredential;
-					options.AutomaticAuthenticate = true;
-					options.AutomaticChallenge = true;
-					options.Events = new BasicAuthEvents
-					{
-						OnAuthenticationFailed = this.OnAuthenticationFailed
-					};
-				})
+				.UseAuthentication()
 				.UseMvc();
 		}
 
@@ -48,16 +49,16 @@ namespace EdjCase.BasicAuth.Sample
 			AuthenticationTicket ticket = null;
 			if (authInfo.Credential.Username == "Test" && authInfo.Credential.Password == "Password")
 			{
-				ClaimsIdentity identity = new ClaimsIdentity(authInfo.AuthenticationScheme);
+				ClaimsIdentity identity = new ClaimsIdentity(authInfo.Scheme);
 				identity.AddClaim(new Claim(ClaimTypes.Name, "Test"));
 				identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "TestId"));
 				ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-				ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.AuthenticationScheme);
+				ticket = new AuthenticationTicket(principal, authInfo.Properties, authInfo.Scheme);
 			}
 			return Task.FromResult(ticket);
 		}
 
-		private Task OnAuthenticationFailed(BasicAuthFailedContext context)
+		private Task OnAuthenticationFailed(HandleRequestContext<BasicAuthOptions> context, Exception exception)
 		{
 			//if...(something that can be handled)...context.HandleResponse();
 			//if...(should skip to next middleware)...context.SkipToNextMiddleware();
