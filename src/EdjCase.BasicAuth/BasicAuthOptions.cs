@@ -12,7 +12,7 @@ namespace EdjCase.BasicAuth
 	/// Configuration options for using basic authentication middleware.
 	/// </summary>
 	public class BasicAuthOptions : AuthenticationSchemeOptions
-	{		
+	{
 		/// <summary>
 		/// Basic authentication realm
 		/// </summary>
@@ -22,5 +22,15 @@ namespace EdjCase.BasicAuth
 		/// Required function to check request credential and create authentication ticket
 		/// </summary>
 		public Func<BasicAuthInfo, Task<AuthenticationTicket>> AuthenticateCredential { get; set; }
+
+		public new BasicAuthEvents Events
+		{
+			get => base.Events as BasicAuthEvents;
+			set
+			{
+				base.Events = value;
+				this.EventsType = typeof(BasicAuthEvents);
+			}
+		}
 	}
 }

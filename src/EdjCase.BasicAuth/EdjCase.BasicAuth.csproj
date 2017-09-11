@@ -7,11 +7,11 @@
     <AssemblyName>EdjCase.BasicAuth</AssemblyName>
     <PackageId>EdjCase.BasicAuth</PackageId>
     <PackageTags>BasicAuth Authentication AspNet Core</PackageTags>
-    <PackageReleaseNotes>Upgrading to NetStandard2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixing Events null ref</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/Gekctek/BasicAuth</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>2.0.0</Version>
+    <Version>2.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
