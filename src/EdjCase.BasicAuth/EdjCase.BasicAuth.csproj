@@ -1,22 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Description>BasicAuth Middleware for AspNet Core</Description>
-    <Authors>Gekctek</Authors>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <AssemblyName>EdjCase.BasicAuth</AssemblyName>
-    <PackageId>EdjCase.BasicAuth</PackageId>
-    <PackageTags>BasicAuth Authentication AspNet Core</PackageTags>
-    <PackageReleaseNotes>Fixing Events null ref</PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/Gekctek/BasicAuth</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <Version>2.0.2</Version>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Description>BasicAuth Middleware for AspNet Core</Description>
+		<Authors>Gekctek</Authors>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<AssemblyName>EdjCase.BasicAuth</AssemblyName>
+		<PackageId>EdjCase.BasicAuth</PackageId>
+		<PackageTags>BasicAuth Authentication AspNet Core</PackageTags>
+		<PackageReleaseNotes>Updating dependecies</PackageReleaseNotes>
+		<PackageProjectUrl>https://github.com/Gekctek/BasicAuth</PackageProjectUrl>
+		<PackageLicenseUrl>https://raw.githubusercontent.com/Gekctek/BasicAuth/master/LICENSE</PackageLicenseUrl>
+		<RepositoryType>git</RepositoryType>
+		<Version>2.0.3</Version>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.1.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+	</ItemGroup>
 
 </Project>
